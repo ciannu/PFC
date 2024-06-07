@@ -58,7 +58,7 @@ const MedicationDetailModal: React.FC<Props> = ({ visible, onClose, medication, 
           <TextInput
             value={symptoms}
             onChangeText={setSymptoms}
-            placeholder="Escribe tus síntomas aquí"
+            placeholder="Escribe los efectos secundarios que hayas notado aquí"
             style={styles.textInput}
             multiline
           />
