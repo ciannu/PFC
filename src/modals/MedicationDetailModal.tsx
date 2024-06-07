@@ -1,32 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Modal,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { FIRESTORE_DB } from "../../FirebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
 import { Medication } from "../types/types";
 
 interface Props {
-    visible: boolean;
-    onClose: () => void;
-    medication: Medication;
-    updateMedications: () => void;
-  }
-  
+  visible: boolean;
+  onClose: () => void;
+  medication: Medication;
+  updateMedications: () => void;
+}
 
-const MedicationDetailModal: React.FC<Props> = ({
-  visible,
-  onClose,
-  medication,
-  updateMedications,
-}) => {
+const MedicationDetailModal: React.FC<Props> = ({ visible, onClose, medication, updateMedications }) => {
   const [symptoms, setSymptoms] = useState<string>(medication.symptoms || "");
 
   useEffect(() => {
@@ -39,7 +24,7 @@ const MedicationDetailModal: React.FC<Props> = ({
       await updateDoc(medicationRef, { symptoms });
       Alert.alert("Éxito", "Síntomas guardados correctamente");
       onClose();
-      updateMedications(); // Llamar a la función de actualización después de guardar los síntomas
+      updateMedications();
     } catch (error) {
       console.error("Error al guardar síntomas", error);
       Alert.alert("Error", "Hubo un problema al guardar los síntomas");
@@ -60,7 +45,7 @@ const MedicationDetailModal: React.FC<Props> = ({
             {Object.entries(medication.days)
               .filter(([day, value]) => value)
               .map(([day]) => day)
-              .join(", ")}  
+              .join(", ")}
           </Text>
           <Text style={styles.detail}>
             Día de inicio del tratamiento:{" "}

@@ -73,20 +73,10 @@ const Home = () => {
       ]
     );
   };
-  useEffect(() => {
-    const fetchMedications = async () => {
-      if (selectedDay && profileName) { // Verifica si selectedDay no es null
-        const meds = await retrieveMedicationsForDay(selectedDay, profileName);
-        setMedications(meds);
-      }
-    };
-    fetchMedications();
-  }, [selectedDay, profileName]);
 
-  
   const updateMedications = async () => {
     try {
-      if (selectedDay && profileName) { // Verifica si selectedDay no es null
+      if (selectedDay && profileName) {
         const meds = await retrieveMedicationsForDay(selectedDay, profileName);
         setMedications(meds);
       }
@@ -100,7 +90,6 @@ const Home = () => {
     closeDrawer();
   };
 
-  
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
       <TouchableOpacity style={styles.drawerOption} onPress={handleShowHistory}>

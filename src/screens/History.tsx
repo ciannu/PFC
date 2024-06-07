@@ -20,11 +20,17 @@ const History = () => {
       const meds = await retrieveMedicationsForDay(new Date(day.dateString), profileName || "");
       setMedications(meds);
     } catch (error) {
-      Alert.alert(
-        "Error",
-        "No se pudieron cargar las medicinas para este día. Inténtalo de nuevo más tarde."
-      );
+      Alert.alert("Error", "No se pudieron cargar las medicinas para este día. Inténtalo de nuevo más tarde.");
       console.error("Error al cargar medicinas:", error);
+    }
+  };
+
+  const updateMedications = async () => {
+    try {
+      const meds = await retrieveMedicationsForDay(new Date(selectedDate), profileName || "");
+      setMedications(meds);
+    } catch (error) {
+      console.error("Error al actualizar los medicamentos:", error);
     }
   };
 
@@ -33,23 +39,19 @@ const History = () => {
       <Calendar
         onDayPress={handleDayPress}
         markedDates={{ [selectedDate]: { selected: true } }}
-        theme={{ 
-          calendarBackground: "#c0d9d9",
-        }}
+        theme={{ calendarBackground: "#c0d9d9" }}
         style={styles.calendar}
       />
       <View style={styles.medicationContainer}>
-        <MedicationInfo medications={medications} onDelete={(id: string) => { } } updateMedications={function (): void {
-          throw new Error("Function not implemented.");
-        } } />
+        <MedicationInfo medications={medications} onDelete={(id: string) => { }} updateMedications={updateMedications} />
       </View>
       {selectedMedication && (
         <MedicationDetailModal
           visible={!!selectedMedication}
           onClose={() => setSelectedMedication(null)}
-          medication={selectedMedication} updateMedications={function (): void {
-            throw new Error("Function not implemented.");
-          } }        />
+          medication={selectedMedication}
+          updateMedications={updateMedications}
+        />
       )}
     </View>
   );
